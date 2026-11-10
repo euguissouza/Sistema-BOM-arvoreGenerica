@@ -1,0 +1,405 @@
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Árvore de Fórmulas | Produtos</title>
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <header class="topo">
+        <div class="container topo-conteudo">
+
+            <div class="marca">
+                <div class="marca-icone">AF</div>
+
+                <div>
+                    <h1>Árvore de Fórmulas</h1>
+                    <p>Cadastro e controle de componentes</p>
+                </div>
+            </div>
+
+        </div>
+    </header>
+
+
+    <main class="container conteudo">
+
+        <section class="introducao">
+            <h2>Controle de produtos</h2>
+
+            <p>
+                Cadastre produtos, consulte sua fórmula e acompanhe
+                os custos dos componentes.
+            </p>
+
+            <p id="mensagem"
+               style="min-height:1.4em;font-weight:600">
+            </p>
+        </section>
+
+
+        <!-- 01 - CADASTRAR PRODUTO -->
+
+        <section class="painel" id="cadastro">
+
+            <div class="titulo-secao">
+
+                <span class="numero-secao">01</span>
+
+                <div>
+                    <h2>Cadastrar produto</h2>
+
+                    <p>
+                        Informe os dados do produto principal.
+                        O valor é opcional, pois o custo é calculado
+                        pelos componentes.
+                    </p>
+                </div>
+
+            </div>
+
+
+            <form class="formulario" id="form-produto">
+
+                <div class="campo campo-grande">
+                    <label for="nome-produto">
+                        Nome do produto
+                    </label>
+
+                    <input
+                        type="text"
+                        id="nome-produto"
+                        placeholder="Ex.: Caneta"
+                    >
+                </div>
+
+
+                <div class="campo">
+                    <label for="valor-produto">
+                        Valor do produto (R$)
+                    </label>
+
+                    <input
+                        type="number"
+                        id="valor-produto"
+                        min="0"
+                        step="0.01"
+                        placeholder="0,00"
+                    >
+                </div>
+
+
+                <div class="acoes campo-completo">
+
+                    <button
+                        class="botao botao-principal"
+                        type="button"
+                        id="btn-salvar-produto"
+                    >
+                        Salvar produto
+                    </button>
+
+                    <button
+                        class="botao botao-secundario"
+                        type="reset"
+                    >
+                        Limpar campos
+                    </button>
+
+                </div>
+
+            </form>
+
+        </section>
+
+
+        <!-- 02 - ADICIONAR COMPONENTE -->
+
+        <section class="painel" id="componentes">
+
+            <div class="titulo-secao">
+
+                <span class="numero-secao">02</span>
+
+                <div>
+                    <h2>Adicionar componente</h2>
+
+                    <p>
+                        Informe a qual item da fórmula
+                        o componente pertence.
+                    </p>
+                </div>
+
+            </div>
+
+
+            <form class="formulario" id="form-componente">
+
+                <div class="campo campo-grande">
+                    <label for="nome-componente">
+                        Nome do componente
+                    </label>
+
+                    <input
+                        type="text"
+                        id="nome-componente"
+                        placeholder="Ex.: Tinta"
+                    >
+                </div>
+
+
+                <div class="campo campo-grande">
+                    <label for="item-pai">
+                        Componente superior
+                    </label>
+
+                    <select id="item-pai"></select>
+                </div>
+
+
+                <div class="campo">
+                    <label for="quantidade-componente">
+                        Quantidade
+                    </label>
+
+                    <input
+                        type="number"
+                        id="quantidade-componente"
+                        min="1"
+                        step="1"
+                        placeholder="1"
+                    >
+                </div>
+
+
+                <div class="campo">
+                    <label for="valor-componente">
+                        Valor unitário (R$)
+                    </label>
+
+                    <input
+                        type="number"
+                        id="valor-componente"
+                        min="0"
+                        step="0.01"
+                        placeholder="0,00"
+                    >
+                </div>
+
+
+                <div class="acoes campo-completo">
+
+                    <button
+                        class="botao botao-principal"
+                        type="button"
+                        id="btn-add-componente"
+                    >
+                        Adicionar componente
+                    </button>
+
+                </div>
+
+            </form>
+
+
+            <div class="lista-componentes">
+
+                <div class="subtitulo-lista">
+                    <h3>Componentes cadastrados</h3>
+                </div>
+
+
+                <div class="tabela-responsiva">
+
+                    <table>
+
+                        <thead>
+                            <tr>
+                                <th>Componente</th>
+                                <th>Item superior</th>
+                                <th>Qtd.</th>
+                                <th>Valor unitário</th>
+                            </tr>
+                        </thead>
+
+                        <tbody id="tabela-componentes"></tbody>
+
+                    </table>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- 03 - EXPLOSÃO DA FÓRMULA -->
+
+        <section class="painel" id="explosao">
+
+            <div class="titulo-secao">
+
+                <span class="numero-secao">03</span>
+
+                <div>
+                    <h2>Explosão da fórmula</h2>
+
+                    <p>
+                        Visualize o produto e seus componentes
+                        em formato de árvore.
+                    </p>
+                </div>
+
+            </div>
+
+
+            <form class="linha-producao">
+
+                <div class="campo campo-produto-producao">
+
+                    <label for="produto-estrutura">
+                        Produto
+                    </label>
+
+                    <select id="produto-estrutura"></select>
+
+                </div>
+
+
+                <div class="acoes acao-producao">
+
+                    <button
+                        class="botao botao-principal"
+                        type="button"
+                        id="btn-estrutura"
+                    >
+                        Exibir estrutura
+                    </button>
+
+                </div>
+
+            </form>
+
+
+            <!-- Área compartilhada pela explosão e implosão -->
+
+            <div class="arvore-area" id="arvore-saida"></div>
+
+        </section>
+
+
+        <!-- 04 - ATUALIZAÇÃO DE CUSTO E IMPLOSÃO -->
+
+        <section class="painel" id="custos">
+
+            <div class="titulo-secao">
+
+                <span class="numero-secao">04</span>
+
+                <div>
+                    <h2>Atualização de custo e implosão</h2>
+
+                    <p>
+                        Atualize o valor de um componente e
+                        recalcule o custo do produto.
+                    </p>
+                </div>
+
+            </div>
+
+
+            <form class="formulario formulario-custo">
+
+                <div class="campo campo-grande">
+
+                    <label for="componente-atualizar">
+                        Componente
+                    </label>
+
+                    <select id="componente-atualizar"></select>
+
+                </div>
+
+
+                <div class="campo">
+
+                    <label for="novo-valor">
+                        Novo valor unitário (R$)
+                    </label>
+
+                    <input
+                        type="number"
+                        id="novo-valor"
+                        min="0"
+                        step="0.01"
+                        placeholder="0,00"
+                    >
+
+                </div>
+
+
+                <div class="acoes campo-completo">
+
+                    <button
+                        class="botao botao-principal"
+                        type="button"
+                        id="btn-atualizar"
+                    >
+                        Atualizar componente
+                    </button>
+
+                </div>
+
+            </form>
+
+
+            <div class="implosao">
+
+                <div>
+
+                    <span class="rotulo-pequeno">
+                        RESULTADO DA IMPLOSÃO
+                    </span>
+
+                    <h3>Custo atualizado do produto</h3>
+
+                    <ul id="lista-implosao"></ul>
+
+                </div>
+
+
+                <strong
+                    class="valor-atualizado"
+                    id="valor-atualizado"
+                >
+                    R$ --
+                </strong>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <footer class="rodape">
+
+        <div class="container">
+            Projeto acadêmico · Estrutura de árvore genérica
+        </div>
+
+    </footer>
+
+
+    <script src="app.js"></script>
+
+</body>
+
+</html>
